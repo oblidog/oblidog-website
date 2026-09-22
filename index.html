@@ -6,7 +6,7 @@
   <title>Oblidog — Keep your payments on a leash</title>
   <meta name="description" content="A focused, self-hosted recurring-bills tracker that turns scattered obligations into one calm monthly plan.">
   <meta name="theme-color" content="#08111f">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='17' fill='%2308111f'/%3E%3Cpath d='M44 20c8 0 8 24 0 24H29c-11 0-11-24 0-24 8 0 9 14 1 14-5 0-5-7 0-7' fill='none' stroke='%2348d2ff' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/png" href="oblidog-icon.png">
   <style>
     :root {
       --ink: #eef7ff;
@@ -48,12 +48,7 @@
       gap: 24px;
     }
     .brand { display: inline-flex; align-items: center; gap: 11px; font-weight: 800; font-size: 1.2rem; letter-spacing: -.03em; }
-    .mark {
-      width: 34px; height: 34px; border: 1px solid rgba(72, 210, 255, .5); border-radius: 11px;
-      display: grid; place-items: center; color: var(--blue); background: rgba(72, 210, 255, .07);
-      box-shadow: inset 0 0 18px rgba(72, 210, 255, .09);
-    }
-    .mark svg { width: 23px; height: 23px; }
+    .mark { width: 34px; height: 34px; object-fit: contain; }
     .nav-links { display: flex; align-items: center; gap: 28px; color: var(--muted); font-size: .92rem; }
     .nav-links a:hover, .nav-links a:focus-visible { color: var(--ink); }
     .button {
@@ -75,39 +70,10 @@
     .lead { color: var(--muted); font-size: clamp(1.05rem, 1.6vw, 1.22rem); max-width: 590px; margin: 0 0 34px; }
     .actions { display: flex; flex-wrap: wrap; gap: 12px; }
     .micro { margin-top: 18px; color: #788da6; font-size: .84rem; }
-    .product-wrap { position: relative; }
+    .product-wrap { position: relative; margin: 0; min-width: 0; }
     .product-wrap::before { content: ""; position: absolute; inset: -55px -35px; background: radial-gradient(circle, rgba(72, 210, 255, .15), transparent 61%); filter: blur(20px); pointer-events: none; }
-    .dashboard {
-      position: relative; border: 1px solid rgba(160, 205, 239, .17); border-radius: 24px; overflow: hidden;
-      background: linear-gradient(155deg, rgba(20, 39, 63, .95), rgba(9, 20, 35, .98)); box-shadow: var(--shadow); transform: perspective(1100px) rotateY(-4deg) rotateX(2deg);
-    }
-    .dash-top { height: 49px; display: flex; align-items: center; padding: 0 18px; border-bottom: 1px solid var(--line); gap: 7px; }
-    .dot { width: 8px; height: 8px; border-radius: 50%; background: #2b4057; }
-    .dash-title { margin-left: auto; color: #70869f; font-size: .73rem; }
-    .dash-body { display: grid; grid-template-columns: 52px 1fr; min-height: 455px; }
-    .dash-side { border-right: 1px solid var(--line); padding-top: 19px; display: flex; align-items: center; flex-direction: column; gap: 18px; }
-    .side-item { width: 26px; height: 26px; border-radius: 8px; border: 1px solid var(--line); background: rgba(255,255,255,.025); }
-    .side-item.active { border-color: rgba(72, 210, 255, .45); background: rgba(72, 210, 255, .1); box-shadow: inset 0 0 0 7px rgba(72, 210, 255, .08); }
-    .dash-main { padding: 24px; }
-    .dash-head { display: flex; justify-content: space-between; align-items: end; margin-bottom: 20px; }
-    .dash-head small { color: #758ba4; display: block; font-size: .67rem; text-transform: uppercase; letter-spacing: .08em; }
-    .dash-head strong { font-size: 1.24rem; letter-spacing: -.03em; }
-    .month { color: var(--muted); border: 1px solid var(--line); border-radius: 8px; padding: 5px 9px; font-size: .68rem; }
-    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-    .stat { padding: 13px 14px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.025); }
-    .stat small { color: #758ba4; font-size: .61rem; text-transform: uppercase; letter-spacing: .07em; }
-    .stat strong { display: block; margin-top: 4px; font-size: .99rem; }
-    .accent { color: var(--blue); }
-    .chart-row { display: grid; grid-template-columns: .92fr 1.08fr; gap: 11px; margin-top: 11px; }
-    .card { border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.02); padding: 15px; }
-    .card-label { color: #8195ab; font-size: .66rem; margin-bottom: 13px; }
-    .ring { width: 106px; aspect-ratio: 1; border-radius: 50%; margin: 5px auto 10px; background: conic-gradient(var(--blue) 0 55%, var(--mint) 55% 78%, var(--amber) 78% 91%, #26394e 91%); display: grid; place-items: center; }
-    .ring::after { content: "84%"; width: 69px; aspect-ratio: 1; display: grid; place-items: center; border-radius: 50%; background: #102239; color: var(--ink); font-size: .76rem; font-weight: 800; }
-    .bars { height: 128px; display: flex; align-items: end; gap: 8px; border-bottom: 1px solid var(--line); padding: 0 4px; }
-    .bar { flex: 1; min-width: 6px; border-radius: 4px 4px 0 0; background: linear-gradient(180deg, var(--blue), #176fbd); opacity: .86; }
-    .bar:nth-child(1) { height: 34%; } .bar:nth-child(2) { height: 61%; } .bar:nth-child(3) { height: 45%; } .bar:nth-child(4) { height: 83%; } .bar:nth-child(5) { height: 55%; } .bar:nth-child(6) { height: 72%; }
-    .invoice { margin-top: 11px; display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: 11px; }
-    .invoice strong { font-size: .72rem; } .invoice small { color: #71869e; font-size: .61rem; } .invoice b { font-size: .7rem; color: var(--mint); }
+    .product-image { position: relative; display: block; width: 100%; height: auto; border: 1px solid rgba(160, 205, 239, .22); border-radius: 18px; box-shadow: var(--shadow); }
+    figcaption { position: relative; margin-top: 14px; color: var(--muted); font-size: .83rem; }
     .section { padding: 120px 0; }
     .section-head { max-width: 700px; margin-bottom: 52px; }
     h2 { font-size: clamp(2.15rem, 4vw, 3.8rem); line-height: 1.03; letter-spacing: -.055em; margin: 14px 0 18px; }
@@ -117,6 +83,11 @@
     .feature-num { color: var(--blue); font-size: .74rem; font-weight: 800; letter-spacing: .1em; }
     .feature h3 { font-size: 1.28rem; margin: 48px 0 10px; letter-spacing: -.03em; }
     .feature p { color: var(--muted); margin: 0; font-size: .94rem; }
+    .screens { padding-top: 30px; }
+    .screens-grid { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(0, .7fr); gap: 22px; align-items: start; }
+    .screen { min-width: 0; margin: 0; }
+    .screen .product-image { background: #fff; }
+    .screen-mobile { width: min(100%, 310px); justify-self: center; }
     .flow { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: stretch; }
     .flow-copy, .flow-list { padding: clamp(28px, 5vw, 55px); border: 1px solid var(--line); border-radius: 24px; background: rgba(11, 25, 43, .68); }
     .flow-copy { display: flex; flex-direction: column; justify-content: space-between; background: linear-gradient(145deg, rgba(22, 132, 255, .2), rgba(11, 25, 43, .72)); }
@@ -127,7 +98,7 @@
     .flow-item b { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; color: var(--blue); border: 1px solid rgba(72,210,255,.27); font-size: .76rem; }
     .flow-item strong { display: block; margin-bottom: 3px; }
     .flow-item span { color: var(--muted); font-size: .9rem; }
-    .cta { margin: 50px 0 90px; padding: clamp(35px, 7vw, 78px); border-radius: 28px; border: 1px solid rgba(72,210,255,.23); background: radial-gradient(circle at 90% 20%, rgba(72, 210, 255, .18), transparent 24rem), #0d1e33; text-align: center; }
+    .cta { margin: 50px auto 90px; padding: clamp(35px, 7vw, 78px); border-radius: 28px; border: 1px solid rgba(72,210,255,.23); background: radial-gradient(circle at 90% 20%, rgba(72, 210, 255, .18), transparent 24rem), #0d1e33; text-align: center; }
     .cta h2 { max-width: 760px; margin-inline: auto; }
     .cta p { color: var(--muted); max-width: 590px; margin: 0 auto 28px; }
     .cta .actions { justify-content: center; }
@@ -137,7 +108,7 @@
     @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr; padding-top: 58px; gap: 60px; }
       .hero-copy { max-width: 720px; }
-      .dashboard { transform: none; max-width: 720px; }
+      .product-wrap { max-width: 720px; }
       .feature-grid { grid-template-columns: 1fr 1fr; }
       .feature:last-child { grid-column: 1 / -1; min-height: 190px; }
       .flow { grid-template-columns: 1fr; }
@@ -151,13 +122,8 @@
       h1 { font-size: clamp(3.15rem, 16vw, 4.8rem); }
       .actions { align-items: stretch; }
       .actions .button { flex: 1 1 180px; }
-      .dash-body { grid-template-columns: 40px 1fr; min-height: 390px; }
-      .dash-main { padding: 16px 12px; }
-      .stats { grid-template-columns: 1fr 1fr; }
-      .stat:last-child { display: none; }
-      .chart-row { grid-template-columns: 1fr; }
-      .chart-row .card:first-child { display: none; }
-      .bars { height: 100px; }
+      .screens-grid { grid-template-columns: 1fr; }
+      .screen-mobile { width: min(75%, 310px); }
       .section { padding: 82px 0; }
       .feature-grid { grid-template-columns: 1fr; }
       .feature, .feature:last-child { grid-column: auto; min-height: 210px; }
@@ -171,7 +137,7 @@
   <header class="shell">
     <nav class="nav" aria-label="Primary navigation">
       <a class="brand" href="#top" aria-label="Oblidog home">
-        <span class="mark" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none"><path d="M45 18c10 0 10 28 0 28H28c-13 0-13-28 0-28 10 0 11 17 1 17-6 0-6-9 0-9" stroke="currentColor" stroke-width="7" stroke-linecap="round"/></svg></span>
+        <img class="mark" src="oblidog-icon.png" width="34" height="34" alt="">
         Oblidog
       </a>
       <div class="nav-links">
@@ -196,28 +162,10 @@
         <div class="micro">Open source · Self-hosted · Built for real household obligations</div>
       </div>
 
-      <div class="product-wrap" aria-label="Oblidog dashboard preview">
-        <div class="dashboard">
-          <div class="dash-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dash-title">Oblidog / Dashboard</span></div>
-          <div class="dash-body">
-            <div class="dash-side"><span class="side-item active"></span><span class="side-item"></span><span class="side-item"></span><span class="side-item"></span></div>
-            <div class="dash-main">
-              <div class="dash-head"><div><small>Monthly overview</small><strong>Everything accounted for.</strong></div><span class="month">September 2026</span></div>
-              <div class="stats">
-                <div class="stat"><small>Due this month</small><strong>4,286.40 PLN</strong></div>
-                <div class="stat"><small>Paid</small><strong class="accent">3,612.80 PLN</strong></div>
-                <div class="stat"><small>Remaining</small><strong>673.60 PLN</strong></div>
-              </div>
-              <div class="chart-row">
-                <div class="card"><div class="card-label">MONTHLY PROGRESS</div><div class="ring"></div></div>
-                <div class="card"><div class="card-label">PAYMENT SCHEDULE</div><div class="bars"><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i></div></div>
-              </div>
-              <div class="invoice"><div><strong>Home utilities</strong><br><small>Updated automatically · today</small></div><b>PAID</b></div>
-              <div class="invoice"><div><strong>Mobile plan</strong><br><small>Due in 4 days</small></div><b style="color:var(--amber)">READY</b></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <figure class="product-wrap">
+        <img class="product-image" src="desktop-dark.png" width="1440" height="1000" alt="Oblidog obligations view in dark mode, showing monthly bills and their payment status" fetchpriority="high">
+        <figcaption>Real app interface · sample household data</figcaption>
+      </figure>
     </section>
 
     <section class="section shell" id="why">
@@ -230,6 +178,24 @@
         <article class="feature"><div class="feature-num">01 / PLAN</div><h3>One monthly truth</h3><p>See what is due, what is paid and what still needs attention — across categories and billing cycles.</p></article>
         <article class="feature"><div class="feature-num">02 / AUTOMATE</div><h3>Integrations do the fetching</h3><p>Import bills, readings and payment status from provider-specific integrations instead of copying them by hand.</p></article>
         <article class="feature"><div class="feature-num">03 / UNDERSTAND</div><h3>History without archaeology</h3><p>Track amounts, components and changes over time, so an unusual bill is visible before it becomes a mystery.</p></article>
+      </div>
+    </section>
+
+    <section class="section shell screens" aria-labelledby="screens-title">
+      <div class="section-head">
+        <div class="eyebrow">A closer look</div>
+        <h2 id="screens-title">Your monthly picture, wherever you check it.</h2>
+        <p class="section-copy">See obligations and payment status at a glance on desktop or mobile.</p>
+      </div>
+      <div class="screens-grid">
+        <figure class="screen">
+          <img class="product-image" src="desktop-light.png" width="1440" height="1000" loading="lazy" alt="Desktop obligations view in light mode with filters and payment cards">
+          <figcaption>Desktop · light mode</figcaption>
+        </figure>
+        <figure class="screen screen-mobile">
+          <img class="product-image" src="mobile-light.png" width="390" height="736" loading="lazy" alt="Mobile obligations view showing filters and payment cards">
+          <figcaption>Mobile · light mode</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -257,7 +223,7 @@
   </main>
 
   <footer>
-    <div class="shell footer-in"><a class="brand" href="#top"><span class="mark" aria-hidden="true">O</span>Oblidog</a><span>Keep your payments on a leash.</span><div class="footer-links"><a href="https://github.com/oblidog" rel="noreferrer">GitHub</a><span aria-disabled="true">Demo coming soon</span></div></div>
+    <div class="shell footer-in"><a class="brand" href="#top"><img class="mark" src="oblidog-icon.png" width="34" height="34" alt="">Oblidog</a><span>Keep your payments on a leash.</span><div class="footer-links"><a href="https://github.com/oblidog" rel="noreferrer">GitHub</a><span aria-disabled="true">Demo coming soon</span></div></div>
   </footer>
 </body>
 </html>
