@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Oblidog — Keep your payments on a leash</title>
-  <meta name="description" content="Track recurring bills, due dates and payments. Compare bill components and import provider data with Oblidog, an open-source, self-hosted app.">
+  <meta name="description" content="Track recurring bills, due dates and payments. Follow each obligation from upcoming to paid and build integrations with the API and Python SDK. Open source and self-hosted.">
   <meta name="theme-color" content="#08111f">
   <link rel="icon" type="image/png" href="oblidog-icon.png">
   <style>
@@ -62,6 +62,12 @@
     .payment-image { width: 100%; border-radius: 10px; border: 1px solid var(--line); }
     .details { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 28px; }
     .details p { color: var(--muted); margin: 0; }
+    .lifecycle { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); list-style: none; padding: 0; margin: 32px 0 24px; }
+    .lifecycle li { position: relative; border-top: 1px solid var(--line); padding: 26px 24px 0 0; }
+    .lifecycle li::before { content: ""; position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
+    .lifecycle h3 { font-size: 1rem; }
+    .lifecycle p { color: var(--muted); font-size: .92rem; margin: 0; }
+    .workflow-note { color: var(--muted); font-size: .92rem; max-width: 850px; margin-bottom: 0; }
     .integrations { margin: 0; }
     .integration { display: grid; grid-template-columns: 180px 1fr; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--line); }
     .integration dt { font-weight: 650; }
@@ -105,6 +111,10 @@
       .screenshot-link img { margin-top: -110%; }
       .payment-image { max-width: 358px; margin-inline: auto; }
       .details { grid-template-columns: 1fr; gap: 24px; }
+      .lifecycle { grid-template-columns: 1fr; margin-top: 28px; }
+      .lifecycle li { border-top: 0; border-left: 1px solid var(--line); padding: 0 0 24px 24px; }
+      .lifecycle li:last-child { padding-bottom: 0; }
+      .lifecycle li::before { top: 4px; left: -5px; }
       .integration { grid-template-columns: 1fr; gap: 4px; padding: 16px 0; }
       .footer-in { align-items: flex-start; flex-direction: column; }
     }
@@ -120,7 +130,7 @@
     <nav class="nav" aria-label="Primary navigation">
       <a class="brand" href="#top" aria-label="Oblidog home"><img class="mark" src="oblidog-icon.png" width="34" height="34" alt="">Oblidog</a>
       <div class="nav-links">
-        <a href="#why">Features</a>
+        <a href="#workflow">Workflow</a>
         <a href="#integrations">Integrations</a>
         <a href="#how">Self-hosting</a>
         <a class="button" href="https://demo.oblidog.com/">Try demo</a>
@@ -136,7 +146,7 @@
           <h1 id="hero-title">Keep your payments <span>on a leash.</span></h1>
         </div>
         <div class="hero-description">
-          <p class="lead">Track recurring bills, due dates and payments. Add amounts yourself or import them from a provider, and keep each month's breakdown for comparison.</p>
+          <p class="lead">Track recurring bills, due dates and payments. Add details yourself or through your integrations, and keep each month's breakdown for comparison.</p>
           <div class="actions">
             <a class="button primary" href="https://demo.oblidog.com/">Try demo <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             <a class="button" href="https://github.com/oblidog/oblidog-ledger">View on GitHub</a>
@@ -153,6 +163,20 @@
         </a>
         <figcaption class="caption"><span>Monthly obligations · sample data</span><a href="desktop-dark.png">View full desktop screenshot</a></figcaption>
       </figure>
+    </section>
+
+    <section class="section shell" id="workflow" aria-labelledby="workflow-title">
+      <div class="section-intro">
+        <h2 id="workflow-title">From upcoming bills to recorded payments.</h2>
+        <p>Track obligations before the final amount is known. Collect the details, confirm what is due, and mark it paid when you are done.</p>
+      </div>
+      <ol class="lifecycle" aria-label="Example obligation lifecycle">
+        <li><h3>Draft</h3><p>See obligations for future periods before data collection starts.</p></li>
+        <li><h3>Collecting data</h3><p>Add or correct amounts and dates manually or through an integration.</p></li>
+        <li><h3>Ready</h3><p>The amount and due date are confirmed. The obligation is ready to pay.</p></li>
+        <li><h3>Paid</h3><p>Payment is marked as complete, with the bill details kept for reference.</p></li>
+      </ol>
+      <p class="workflow-note">Already have complete details? Start at Ready. Reopen an obligation when details need correcting, or cancel it while collecting data. Integrations can flag inconsistent bill data for attention.</p>
     </section>
 
     <section class="section shell" id="why" aria-labelledby="features-title">
@@ -181,16 +205,15 @@
 
     <section class="section shell" id="integrations" aria-labelledby="integrations-title">
       <div class="section-intro">
-        <h2 id="integrations-title">Import from your provider.</h2>
-        <p>The project maintains integrations for these services. Each connects to one bill category in Oblidog.</p>
+        <h2 id="integrations-title">Build the integration you need.</h2>
+        <p>Bring data from your own sources into the same bill workflow. Use the API directly, or start with the Python SDK and a working example.</p>
       </div>
       <dl class="integrations">
-        <div class="integration"><dt>e-Kartoteka</dt><dd>Housing settlement data and bill components from your resident portal.</dd></div>
-        <div class="integration"><dt>iPrzedszkole</dt><dd>Monthly kindergarten charges, including fixed fees, meals and additional charges.</dd></div>
-        <div class="integration"><dt>NJU Mobile</dt><dd>Current-period invoice amounts, due dates and payment status for a mobile account.</dd></div>
+        <div class="integration"><dt><a href="https://github.com/oblidog/oblidog-ledger/blob/main/docs/integration-api.md">Integration API</a></dt><dd>Sync amounts, dates, bill components and payment status. Each integration key is scoped to one category.</dd></div>
+        <div class="integration"><dt><a href="https://oblidog.github.io/oblidog-client-python/">Python SDK</a></dt><dd>Use a Python client to update obligations and report integration runs, with guides for common import tasks.</dd></div>
+        <div class="integration"><dt><a href="https://github.com/oblidog/oblidog-integrations/tree/main/src/oblidog_integrations/integrations/demo">Example integration</a></dt><dd>Use the demo adapter as a starting point: fetch data, update an obligation and mark it ready. Adapt the source-specific logic to your needs.</dd></div>
       </dl>
-      <p class="integration-note">Integrations run as separate scheduled jobs on your infrastructure and need their own configuration. You can also enter bills manually or build an adapter using the API.</p>
-      <p class="integration-note"><a href="https://github.com/oblidog/oblidog-integrations#host-deployment">Integration setup</a> · <a href="https://github.com/oblidog/oblidog-ledger/blob/main/docs/integration-api.md">Integration API</a></p>
+      <p class="integration-note">Run integrations separately on your infrastructure, on your schedule. Each needs its own setup and data-source access. Manual entries work alongside imported data.</p>
     </section>
 
     <section class="section shell" id="how" aria-labelledby="setup-title">
@@ -203,7 +226,7 @@
         <ol class="steps">
           <li><h3>Install and configure</h3><p>Follow the guide to set up the containers, application secrets and access to your instance.</p></li>
           <li><h3>Add your recurring categories</h3><p>Create categories for bills such as rent, electricity and insurance, then review their billing periods and amounts.</p></li>
-          <li><h3>Connect integrations when you need them</h3><p>Start with manual entries. Add a provider job later to import data into a category.</p></li>
+          <li><h3>Connect integrations when you need them</h3><p>Start with manual entries. Add an integration later to import data into a category.</p></li>
         </ol>
       </div>
     </section>
