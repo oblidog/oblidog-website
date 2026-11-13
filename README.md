@@ -40,3 +40,28 @@ JavaScript dependency. Workflow copy should match the Ledger
 The four-stage timeline is an example path, not a mandatory sequence. Integration
 copy links to the API, Python SDK, and demo adapter as a starting point for custom
 integrations; it does not advertise individual providers or an installable template.
+
+## Automated checks
+
+`Website checks` runs on pull requests, pushes to `main`, and manual dispatch.
+It validates HTML, checks local links/anchors/image sources (including `srcset`),
+and runs axe WCAG 2 A/AA and WCAG 2.1 A/AA checks in Chromium at desktop and
+mobile widths. Both viewports also check for horizontal overflow. Automated
+accessibility checks do not replace keyboard and visual review.
+
+Use Node.js 24 and Python 3 to run the same checks locally:
+
+```bash
+npm ci
+npx playwright install --with-deps chromium
+npm run check
+```
+
+For only HTML and local references, run `npm run check:html` and
+`npm run check:links`; these do not need a browser. External URLs are deliberately
+excluded so third-party availability cannot block a pull request. No screenshot
+baselines or application E2E suite are involved. Dependencies are for checks only;
+the website still has no runtime JavaScript or build step.
+
+After the workflow has run, select `Website checks` as a required status check
+in the GitHub ruleset for `main` if merges should be blocked on failure.

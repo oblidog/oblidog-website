@@ -1,0 +1,37 @@
+name: Website checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: website-checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  website-checks:
+    name: Website checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - name: Validate HTML
+        run: npm run check:html
+      - name: Check local links and assets
+        run: npm run check:links
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Check accessibility and overflow
+        run: npm run check:a11y
