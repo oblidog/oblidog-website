@@ -35,5 +35,8 @@ The calendar uses a separate mobile capture so its labels stay readable.
 
 After editing, check desktop and mobile widths, image loading, anchor navigation,
 keyboard focus, and the demo/documentation links. There is no build step or
-JavaScript dependency. Provider descriptions should match the maintained
-[integration documentation](https://github.com/oblidog/oblidog-integrations).
+JavaScript dependency. Workflow copy should match the Ledger
+[obligation lifecycle](https://github.com/oblidog/oblidog-ledger/blob/main/docs/obligation-lifecycle.md).
+The four-stage timeline is an example path, not a mandatory sequence. Integration
+copy links to the API, Python SDK, and demo adapter as a starting point for custom
+integrations; it does not advertise individual providers or an installable template.
